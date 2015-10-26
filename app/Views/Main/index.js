@@ -37,16 +37,16 @@ var MainScreen = React.createClass({
   	}
 
   	return (
-      <View style={styles.container}>      
-
         <RefreshableListView
           style = {styles.listView}
           dataSource={this.state.dataSource}
           renderRow={this.renderTopicCell}
           loadData={this.fetchData}
-          refreshDescription="Refreshing top stories" />
-
-      </View>
+          refreshDescription="下拉刷新" 
+          scrollEventThrottle = {100}
+          refreshingIndictatorComponent={
+            <RefreshableListView.RefreshingIndicator stylesheet={indicatorStylesheet} />
+         }/>
   	);
   },
 
@@ -64,7 +64,7 @@ var MainScreen = React.createClass({
   rederLoadingView: function(){
     return (
       <View style={styles.container}>
-        <Text>
+        <Text textAlign={'center'} fontSize = {50} fontWeight = {'bold'}>
                 Loading movies...
         </Text>
       </View>
@@ -78,19 +78,33 @@ var MainScreen = React.createClass({
   },
 });
 
+var indicatorStylesheet = StyleSheet.create({
+  wrapper: {
+    backgroundColor: 'f0f0f0',
+    height: 60,
+    marginTop: 10,
+  },
+  content: {
+    backgroundColor: 'f0f0f0',
+    marginTop: 5,
+    height: 60,
+    marginBottom: 5,
+  },
+});
 
 var styles = StyleSheet.create({
   listView: {
   	flex : 1,
-    backgroundColor: '#E2E2E2',
+    backgroundColor: '#f0f0f0',
+    paddingTop : 64,
   },
 
   container: {
     flex: 1,
     paddingTop: 64,
-    justifyContent: 'center',
-    backgroundColor: '#E2E2E2',
-  }
+    alignItems : 'center',
+    backgroundColor: '#f0f0f0',
+  },
 });
 
 module.exports = MainScreen;

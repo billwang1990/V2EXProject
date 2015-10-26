@@ -9,11 +9,13 @@ var {
   StyleSheet,
 } = React;
 
+var ParseHTML = require('../../ParseHtml.js');
+
 var TopicDetail = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-        <WebView url={this.props.url}/>
+          <ParseHTML style ={styles.content} code={this.props.topic.content_rendered}/>
       </View>
     );
   }
@@ -25,6 +27,11 @@ var styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F6F6EF',
     flexDirection: 'column',
+  },
+  content:{
+    alignItems: 'center',
+    margin:5,
+    paddingTop:64,
   },
 });
 

@@ -8,6 +8,7 @@ var {
   StyleSheet,
   View,
   Image,
+  PixelRatio,
   Text,
   TouchableHighlight,
 } = React;
@@ -20,20 +21,17 @@ var TopicCell = React.createClass({
     <TouchableHighlight onPress={this.onPress}>
 
       <View style = {styles.container}>
-	    <Image style={styles.img_view} source={{uri: 'http:'+this.props.topic.member.avatar_normal}}/>
-	      <View style= {styles.container_1}>
-		    <Text style={styles.title} numberOfLines={2}>
-		    	{this.props.topic.title}
-		    </Text>
-		    <View style={styles.container_1_1}>
-		    	<Text style={styles.author}>
-		    	  {this.props.topic.member.username}
-		    	</Text>
-		    	<Text style={styles.created}>
-		    	  created {moment.unix(this.props.topic.created).fromNow()}
-		    	</Text>
-		    </View>
-		  </View>
+      	<Text style = {styles.title} numberOfLines = {1} textAlign={'left'}>{this.props.topic.title}</Text>
+      	<Text style = {styles.content} numberOfLines = {2}> {this.props.topic.content}</Text>
+      	<View style = {styles.container_1}>
+      	  <Image
+      	    style={styles.img_view}
+      	    source={{uri: 'http:'+this.props.topic.member.avatar_normal}} />
+      	  <Text style={styles.created}>
+      	   {this.props.topic.member.username} created {moment.unix(this.props.topic.created).fromNow()}
+      	  </Text>
+      	</View>
+	    <View style={styles.cellBorder} />
       </View>  
     </TouchableHighlight>
     );
@@ -43,52 +41,64 @@ var TopicCell = React.createClass({
     this.props.navigator.push({
       title: this.props.topic.title,
       component: TopicDetail,
-      passProps: {url: this.props.topic.url},
+      passProps: {topic: this.props.topic},
     });
   },
 });
 
 var styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    backgroundColor : '#FFFFFF'
+    flexDirection: 'column',
+    backgroundColor : '#FFFFFF',
+    height : 80,
   },
-  img_view:{
-    height:60,
-    marginLeft:10,
-    marginRight:10,
-    marginBottom:10,
-    marginTop:5,
-    backgroundColor:'#fff',
-    flex:1
-  },
-  container_1:{
-  	flex:3,
-  	height: 60,
+  
+  title:{
+  	flex:1,
+  	marginLeft : 10,
+  	marginRight : 10,
   	marginTop : 5,
-  	marginBottom : 5,
-  	marginLeft: 5,
-  	justifyContent: 'center',
-  	flexDirection: 'column',
+  	fontSize : 14,
+  	fontWeight: 'bold',
   },
 
-  title:{	
-  	flex:2,
-  	marginRight: 5,
-  	justifyContent: 'center'
+  content:{
+  	flex : 2,
+  	alignItems : 'center',
+  	marginLeft : 10,
+  	marginRight : 10,
+  	marginTop : 2,
+  	fontSize : 12,
   },
 
-  container_1_1:{
+  container_1:{
   	flex : 1,
-  	flexDirection: 'row',
+  	flexDirection : 'row',
+  	justifyContent: 'center',
+  	height : 30,
   },
-  author:{
- 	flex : 1,
+
+  img_view:{
+    height:18,
+    width : 18,
+    marginRight :5,
+    marginLeft :10,
+    marginBottom : 2,
+    backgroundColor:'#fff',
   },
 
   created:{
-  	flex : 3,
-  }
+  	fontSize : 10,
+  	color: '#0F0F0F',
+  	flex : 2,
+  },
+
+  cellBorder: {
+    backgroundColor: '000fff',
+    // Trick to get the thinest line the device can display
+    height: 1 / PixelRatio.get(),
+    marginLeft: 4,
+  },
 });
 
 module.exports = TopicCell;

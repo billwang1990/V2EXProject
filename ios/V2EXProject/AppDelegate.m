@@ -53,6 +53,7 @@
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [[UIViewController alloc] init];
   rootViewController.view = rootView;
+  rootViewController.edgesForExtendedLayout = UIRectEdgeNone;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   return YES;
